@@ -103,15 +103,17 @@
                                             <a href="<?= base_url(); ?>user_gallery/deletePic/<?= $content[0]->id_galeri; ?>"
                                                 class="close fileinput-remove text-right" title="remove / delete"><span
                                                     class="fs-16 fa fa-times m-l-5 m-r-5"></span></a>
-                                            <div class="file-preview-thumbnails">
-                                                <div class="file-preview-frame">
-                                                    <img
-                                                        src="<?= base_url(); ?>assets/content/<?= $content[0]->file_galeri; ?>"
-                                                        class="file-preview-image"
-                                                        title="<?= $content[0]->file_galeri; ?>" width="auto"
-                                                        style="max-height:100px">
-                                                </div>
-                                            </div>
+                                                    <div class="file-preview-thumbnails">
+                                                        <div class="file-preview-frame">
+                                                            <span
+                                                                src="<?= base_url(); ?>assets/content/<?= $content[0]->file_galeri; ?>"
+                                                                class="file-preview-image"
+                                                                title="<?= $content[0]->file_galeri; ?>" width="auto"
+                                                                style="max-height:80px">
+                                                            </span>
+                                                            <span style="font-size:100px;" class="fa fa-file-archive-o m-r-20"></span>
+                                                        </div>
+                                                    </div>
                                             <div class="clearfix"></div>
                                             <div class="file-preview-status text-center text-complete"></div>
                                         </div>
@@ -119,12 +121,10 @@
 
                                     <input type="file" class="file" name="file_galery" id="file_galery"
                                         data-show-upload="false" data-show-close="false" data-show-preview="false"
-                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'/>
+                                        data-allowed-file-extensions='["zip", "rar"]'/>
                                     <p class="hint-text">
                                         <small>
-                                            *Maksimal 5MB. Rekomendasi ukuran: <?= $this->pic_width; ?>px x <?= $this->pic_height; ?>px. Format file yang diperbolehkan: jpg / jpeg. <br/>
-                                            *Untuk mengoptimalkan performance website, compress gambar sebelum di upload
-                                            <a href="https://compressor.io/" target="_blank"><b><u>disini.</u></b></a>
+                                            *Maksimal 100MB. Format file yang diperbolehkan: zip / rar.<br/>
                                         </small>
                                     </p>
                                 </div>
@@ -136,8 +136,9 @@
                                 <label class="col-md-2 control-label text-right sm-text-left">Status</label>
                                 <div class="col-md-3 col-xs-12">
                                     <select name="statuss" id="statuss" class="full-width select_nosearch" required>
-                                    <option value="Y">Aktif</option>
-                                    <option value="N">Tidak Aktif</option>
+                                    
+                                    <option value="Y" <?= $selected = $content[0]->statuss == 'Y' ? 'selected': '' ?> >Aktif</option>
+                                    <option value="N" <?= $selected = $content[0]->statuss == 'N' ? 'selected': '' ?>>Tidak Aktif</option>
                                     </select>
                                 </div>
                             </div>

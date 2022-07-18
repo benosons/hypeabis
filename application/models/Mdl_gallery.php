@@ -124,7 +124,7 @@ class Mdl_gallery extends CI_Model
         $this->db->select('tbl_admin.name AS admin_name, tbl_admin.username AS admin_username, tbl_admin.email AS admin_email');
         $this->db->join('tbl_admin', 'tbl_virtual_gallery.id_admin = tbl_admin.id_admin', 'left');
         $this->db->order_by('tbl_virtual_gallery.id_galeri', 'desc');
-        $this->db->where('statuss', 'Y');
+        // $this->db->where('statuss', 'Y');
         $this->db->limit($num, $offset);
         return $this->db->get_where('tbl_virtual_gallery')->result();
     }

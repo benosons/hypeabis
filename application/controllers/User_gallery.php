@@ -187,7 +187,6 @@ class User_gallery extends CI_Controller
             redirect('user_gallery/index');
         }
 
-
         //load view edit admin
         $content = $this->load->view('user/gallery/edit', $data, true);
         array_push($this->js, '<script type="text/javascript" src="' . base_url() . 'files/backend/plugins/ckeditor/ckeditor.js"></script>'); //ckeditor

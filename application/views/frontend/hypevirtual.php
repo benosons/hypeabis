@@ -18,7 +18,7 @@
 				if($xx <= 3){
 				?>
 				<div id="#slider-<?= $carousel->id_galeri ?>" class="carousel-item <?= $result = $xx == 0 ? 'active' : ''; ?>">
-					<img alt="<?= strtoupper($carousel->judul_galeri); ?>" src="<?= base_url('assets/content/').$carousel->file_galeri ?>">
+					<img alt="<?= strtoupper($carousel->judul_galeri); ?>" src="<?= base_url('assets/content/').$carousel->thumb_galeri ?>">
 					<!-- <div class="carousel-caption">
 						<h3>discover a new you!</h3>
 						<p>Transform your look today with our special offers!</p>

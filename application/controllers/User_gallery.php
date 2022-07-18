@@ -131,7 +131,7 @@ class User_gallery extends CI_Controller
 
                         $zip->extractTo(dirname(__FILE__, 3)."./virtual/".date("Y/m/d")."/".$_FILES['file_gallery']['size']."/");
                         $zip->close();
-                        $virtual_galeri = dirname(__FILE__, 3)."./virtual/".date("Y/m/d")."/".$_FILES['file_gallery']['size']."/".$info['filename'];
+                        $virtual_galeri = "virtual/".date("Y/m/d")."/".$_FILES['file_gallery']['size']."/".$info['filename'];
                     }
 
                 }

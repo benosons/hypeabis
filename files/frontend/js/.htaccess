@@ -1,0 +1,30 @@
+# deny all .htaccess, .DS_Store and ._* (resource fork) files
+<Files ~ "^\.([Hh][Tt]|[Dd][Ss]_[Ss]|[_])">
+ Order allow,deny
+ Deny from all
+ Satisfy All
+</Files>
+
+# deny access to all .log and .comment files
+<Files ~ "^.*\.([Ll][Oo][Gg]|[cC][oO][mM][mM][eE][nN][tT])">
+ Order allow,deny
+ Deny from all
+ Satisfy All
+</Files>
+
+# disable indexing and executing script with some format
+Options -Indexes
+Options -ExecCGI
+AddHandler cgi-script .php .php3 .php4 .phtml .pl .py .jsp .asp .htm .shtml .html .sh .cgi .jsx .go .bat
+
+# block akses semua file yg format filenya tidak sesuai spt yg di declare
+<Files ^(*.jpeg|*.jpg|*.png|*.gif|*.pdf|*.doc|*.docx|*.xls|*.xlsx|*.ppt|*.pptx|*.txt)>
+order deny,allow
+deny from all
+</Files>
+
+# serve custom error pages
+ErrorDocument 400 http://%{HTTP_HOST}/errors/display/400
+ErrorDocument 403 http://%{HTTP_HOST}/errors/display/403
+ErrorDocument 404 http://%{HTTP_HOST}/errors/display/404
+ErrorDocument 500 http://%{HTTP_HOST}/errors/display/404

@@ -1,0 +1,64 @@
+/**
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
+ */
+
+CKEDITOR.editorConfig = function( config ) {
+  // var base_url = "http://157.230.47.0/bisnismuda";
+  var base_url = "http://hypeabis.id";
+	config.language = 'en';
+  
+  config.filebrowserBrowseUrl = base_url + '/uploader/upload/all/';
+	config.filebrowserImageBrowseUrl = base_url + '/uploader/upload/image/';
+	config.filebrowserUploadUrl = base_url + '/uploader/direct/all/';
+	config.filebrowserImageUploadUrl = base_url + '/uploader/direct/image/';
+	config.filebrowserWindowWidth = '820';
+  config.filebrowserWindowHeight = '470';
+	
+  config.autoParagraph = true;
+  config.forcePasteAsPlainText = true;
+	config.allowedContent  = true;
+	config.enterMode = CKEDITOR.ENTER_BR;
+	config.toolbar = [
+		{name: 'tools', items: [ 'Maximize', 'Source' ] },
+    {name: 'clipboard', items: ['PasteText']},
+		{name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+		{name: 'basicstyles', items: [ 'FontSize', 'Bold', 'Italic', 'Underline'] },
+		{name: 'links', items: [ 'Blockquote', 'Link', 'Unlink' ] },
+		{name: 'paragraph', items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+		{name: 'paragraph', items: [ 'NumberedList', 'BulletedList'] },
+		{name: 'insert', items: [ 'Table', 'Youtube', 'imagebinary','btgrid'] },
+		{name: 'styles', items: [ 'Format'] },
+	];
+  config.height = '400px';
+	
+  config.removePlugins = 'image,forms';
+	config.extraPlugins = 'imagebinary, btgrid, youtube, wordcount';
+  config.format_tags = 'p;h1;h2;h3';
+  //color..
+  config.colorButton_colorsPerRow = 6;
+  config.colorButton_colors =
+    '000000,ffd200,fbb040,bb7711,8c5600,5b3800,' +
+    '8dc63f,62a704,3d6a00,14e7b8,15e8e1,15c8e8,' + 
+    'f16521,5dc6cf,ffd55b,c2b49a,9a5f98,ffffff';
+  
+  /* youtube config */
+  config.youtube_height = '480';
+  config.youtube_responsive = true;
+  config.youtube_related = true;
+  config.youtube_controls = true;
+};
+
+CKEDITOR.on( 'dialogDefinition', function( ev ) {
+  var dialogName = ev.data.name;
+  var dialogDefinition = ev.data.definition;
+
+  if ( dialogName == 'table' ) {
+    var info = dialogDefinition.getContents( 'info' );
+    info.get( 'txtWidth' )[ 'default' ] = '100%';       // Set default width to 100%
+    info.get( 'txtBorder' )[ 'default' ] = '0';         // Set default border to 0
+    
+    var addCssClass = dialogDefinition.getContents('advanced').get('advCSSClasses');
+    addCssClass['default'] = 'table';
+  }
+});

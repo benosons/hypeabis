@@ -1,0 +1,10 @@
+User-agent: *
+
+Disallow: /adminarea
+Disallow: /hypeadmin
+Disallow: /assets_bckp
+Disallow: /testimage
+Disallow: /info.php
+Disallow: /andana.tar.gz
+Disallow: /LOG_DATABASE
+Disallow: /DB_ChangeLog.txt

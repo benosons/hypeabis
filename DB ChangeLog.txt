@@ -1,0 +1,215 @@
+Contoh*
+[2020/06/23] - tambah tbl_article.paginated [INT] Default 0
+
+-----
+[2020/06/28] - tambah tbl_user.cover [VARCHAR(200)] Default NULL
+							 ALTER TABLE `tbl_user` ADD `cover` VARCHAR(200) NULL AFTER `picture`;
+[2020/06/28] - tambah tbl_users_following:
+							 CREATE TABLE `tbl_user_following` ( `id` INT NOT NULL AUTO_INCREMENT , `id_user` INT NOT NULL , `id_user_following` INT NOT NULL , PRIMARY KEY (`id`), UNIQUE INDEX(`id_user`, `id_user_following`));
+[2020/07/04] - tambah tbl_content_page:
+							 CREATE TABLE `tbl_content_page` ( `id` INT NOT NULL AUTO_INCREMENT,  `id_content` INT NOT NULL ,  `page_no` INT NOT NULL ,  `content` TEXT NOT NULL , PRIMARY KEY (`id`));
+[2020/07/05] - tambah tbl_verified_member_submission:
+							 CREATE TABLE `tbl_verified_member_submission` (`id` int(11) NOT NULL AUTO_INCREMENT, `id_user` int(11) NOT NULL, `is_accepted` tinyint(1) DEFAULT NULL, `reject_description` varchar(300) DEFAULT NULL, `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` datetime NOT NULL, PRIMARY KEY (`id`));
+[2020/07/06] - tambah tbl_global.verified_member_point:
+							 ALTER TABLE `tbl_global` ADD `verified_member_point` INT NOT NULL AFTER `linkedin`;
+[2020/07/06] - tambah data pada tbl_module:
+							 INSERT INTO `tbl_module` (`id_module`, `module_parent`, `module_name`, `module_desc`, `module_icon`, `module_icon_big`, `module_redirect`, `module_order`, `module_status`, `updatable`, `deletable`) VALUES (67, 56, 'Verified Member', 'Digunakan untuk mengelola sistem verified member', 'fa-star', '20200706152016000000202003261528180000005presentationspeechconferencebusinessjobworkpress.png', 'admin_verifiedmembersetting', 5, 1, 1, 1);
+[2020/07/13] - tambah tbl_verified_member_submission.ktp_picture:
+							 ALTER TABLE `tbl_verified_member_submission` ADD `ktp_picture` VARCHAR(1000) NOT NULL AFTER `id_user`;
+[2020/07/20] - tambah tabel tbl_content.type:
+							 ALTER TABLE `tbl_content` ADD `type` INT(1) DEFAULT '1' NOT NULL COMMENT '1: article, 2: sponsored' AFTER `id_user`, ADD INDEX (`type`);
+[2020/07/20] - ubah tabel nullable tbl_content.type:
+							 ALTER TABLE `tbl_content` CHANGE `id_admin` `id_admin` INT(11) NULL, CHANGE `id_user` `id_user` INT(11) NULL, CHANGE `id_category` `id_category` INT(11) NULL, CHANGE `short_desc` `short_desc` VARCHAR(1000) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `content` `content` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `content_pic_square` `content_pic_square` VARCHAR(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `pic_caption` `pic_caption` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `last_read` `last_read` DATETIME NULL, CHANGE `last_comment` `last_comment` DATETIME NULL;
+[2020/07/20] - tambah tbl_content_sponsored:
+							 CREATE TABLE `tbl_content_sponsored` (`id_content` int(11) NOT NULL, `id_position` int(11) NOT NULL, `start_date` date NOT NULL, `finish_date` date NOT NULL, `view_count` int(11) NOT NULL DEFAULT '0', `click_count` int(11) NOT NULL DEFAULT '0', PRIMARY KEY (`id_content`));
+[2020/07/20] - tambah tbl_content_sponsored_position:
+							 CREATE TABLE `tbl_content_sponsored_position` (`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(200) NOT NULL, PRIMARY KEY (`id`));
+							 INSERT INTO `tbl_content_sponsored_position` (`id`, `name`) VALUES (1, 'Main Slider'), (2, 'NgeHITS'), (3, 'FRESH - Big'), (4, 'FRESH - Small'), (5, 'Rekomendasi'), (6, 'Populer - Big'), (7, 'Populer - Small');
+[2020/07/21] - ubah tabel comment tbl_content.type:
+							 ALTER TABLE `tbl_content` CHANGE `type` `type` INT(1) NOT NULL DEFAULT '1' COMMENT '1: article, 2: sponsored, 3: classic poll, 4: versus poll';
+[2020/07/21] - tambah tabel tbl_content_poll:
+							 CREATE TABLE `tbl_content_poll` (`id` INT NOT NULL AUTO_INCREMENT, `id_content` INT NOT NULL, `type` INT(1) NOT NULL DEFAULT '1' COMMENT '1 list; 2 grid', `order_no` INT NOT NULL, `question` VARCHAR(500) NOT NULL, `picture` VARCHAR(1000) DEFAULT NULL, PRIMARY KEY (`id`));
+[2020/07/21] - tambah tabel tbl_content_poll_answer:
+							 CREATE TABLE `tbl_content_poll_answer` (`id` INT NOT NULL AUTO_INCREMENT, `id_content_poll` INT NOT NULL, `order_no` INT NOT NULL, `answer` VARCHAR(250) NOT NULL, `picture` VARCHAR(1000) DEFAULT NULL, PRIMARY KEY (`id`));
+[2020/07/21] - tambah tabel tbl_content_poll_answer_vote:
+							 CREATE TABLE `tbl_content_poll_answer_vote` (`id` INT NOT NULL AUTO_INCREMENT, `id_content_poll_answer` INT NOT NULL, `id_user` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX(`id_content_poll_answer`, `id_user`));
+[2020/07/21] - ubah comment tabel tbl_content.type:
+							 ALTER TABLE `tbl_content` CHANGE `type` `type` INT(1) NOT NULL DEFAULT '1' COMMENT '1: article, 2: sponsored, 3: classic poll, 4: versus poll, 5: quiz';
+[2020/08/02] - tambah tabel tbl_content_quiz_question:
+							 CREATE TABLE `tbl_content_quiz_question` (`id` INT NOT NULL AUTO_INCREMENT, `id_content` INT NOT NULL, `type` INT(1) NOT NULL DEFAULT '1' COMMENT '1 list; 2 grid', `order_no` INT NOT NULL, `text` VARCHAR(500) NOT NULL, `picture` VARCHAR(1000) DEFAULT NULL, PRIMARY KEY (`id`));
+[2020/08/02] - tambah tabel tbl_content_quiz_choice:
+							 CREATE TABLE `tbl_content_quiz_choice` (`id` INT NOT NULL AUTO_INCREMENT, `id_content_quiz_question` INT NOT NULL, `order_no` INT NOT NULL, `is_answer` BOOLEAN NOT NULL DEFAULT 0, `text` VARCHAR(250) NOT NULL, `picture` VARCHAR(1000) DEFAULT NULL, PRIMARY KEY (`id`));
+[2020/08/02] - tambah tabel tbl_content_quiz_answer:
+							 CREATE TABLE `tbl_content_quiz_answer` (`id` INT NOT NULL AUTO_INCREMENT, `id_content_quiz_choice` INT NOT NULL, `id_user` INT NOT NULL, PRIMARY KEY (`id`), UNIQUE INDEX(`id_content_quiz_choice`, `id_user`));
+[2020/08/08] - ubah tabel tbl_module:
+							 UPDATE `tbl_module` SET `module_redirect` = 'admin_shoppable' WHERE `tbl_module`.`id_module` = 48;
+[2020/08/08] - ubah comment tabel tbl_content.type:
+							 ALTER TABLE `tbl_content` CHANGE `type` `type` INT(1) NOT NULL DEFAULT '1' COMMENT '1: article, 2: sponsored, 3: classic poll, 4: versus poll, 5: quiz, 6: shoppable';
+[2020/08/08] - ubah tabel tbl_point:
+							 UPDATE `tbl_point` SET `id_point`=`id_point`+1 WHERE `id_point` > 4 ORDER BY `id_point` DESC;
+							 INSERT INTO `tbl_point` (`id_point`, `trigger_type`, `trigger_str`, `point`, `trigger_str_min`, `point_min`, `deleted`) VALUES (5, 'add_shoppable', 'Submit shoppable content', 10, 'Shoppable content di nonaktifkan / dihapus', -10, 0);
+[2020/08/08] - tambah tbl_content_shoppable:
+							 CREATE TABLE `tbl_content_shoppable` (`id_content` int(11) NOT NULL, `use_content_pic` BOOLEAN NOT NULL DEFAULT 0, `picture` VARCHAR(1000) DEFAULT NULL, PRIMARY KEY (`id_content`));
+[2020/08/08] - tambah tbl_content_shoppable_item:
+							 CREATE TABLE `tbl_content_shoppable_item` (`id` INT NOT NULL AUTO_INCREMENT, `id_content` int(11) NOT NULL, `order_no` INT NOT NULL, `name` VARCHAR(100) NOT NULL, `top_percentage` DECIMAL(6,3) NOT NULL DEFAULT '0.000', `left_percentage` DECIMAL(6,3) NOT NULL DEFAULT '0.000', price INT(11) NOT NULL, `url` VARCHAR(500) NOT NULL, `picture` VARCHAR(1000) DEFAULT NULL, PRIMARY KEY (`id`));
+[2020/08/12] - tambah kolom tbl_global:
+							 ALTER TABLE `tbl_global` ADD `home_layout_type` INT(2) NOT NULL DEFAULT '1' COMMENT '1: Multi Item Main Slider, 2: Single Item Main Slider' AFTER `logo_height`;
+
+
+
+
+[2021/04/26] - ubah comment tabel tbl_content.type:
+							 ALTER TABLE `tbl_content` CHANGE `type` `type` INT(1) NOT NULL DEFAULT '1' COMMENT '1: article, 2: sponsored, 3: classic poll, 4: versus poll, 5: quiz, 6: shoppable, 7: photo';
+[2021/04/26] - tambah data pada tbl_module:
+							 INSERT INTO `tbl_module` (`id_module`, `module_parent`, `module_name`, `module_desc`, `module_icon`, `module_icon_big`, `module_redirect`, `module_order`, `module_status`, `updatable`, `deletable`) VALUES (72, 8, 'Citra', 'Digunakan untuk mengelola konten citra', 'fa-picture-o', '20210427000032000000202003261446430000008computermonitordesktopshopshoppingcommercemarket.png', 'admin_photo', 4, 1, 1, 1);
+[2021/04/26] - tambah data pada tbl_point:
+							 INSERT INTO `tbl_point` (`id_point`, `trigger_type`, `trigger_str`, `point`, `trigger_str_min`, `point_min`, `deleted`) VALUES ('11', 'add_photo', 'Submit photo', '10', 'Citra di nonaktifkan / dihapus', '-10', '0');
+[2021/04/26] - tambah tabel tbl_content_photo:
+							 CREATE TABLE `tbl_content_photo` (`id` INT NOT NULL AUTO_INCREMENT, `id_content` INT NOT NULL, `picture` VARCHAR(200), `picture_thumb` VARCHAR(200), `picture_square` VARCHAR(200), PRIMARY KEY (`id`));
+[2021/04/26] - hapus data tabel tbl_category:
+							 DELETE FROM `tbl_category` WHERE `tbl_category`.`id_category` = 6;
+[2021/04/27] - isi data dummy photo:
+							 INSERT INTO `tbl_content` (`id_content`, `id_admin`, `id_user`, `type`, `id_category`, `paginated`, `title`, `short_desc`, `content`, `submit_date`, `content_pic`, `content_pic_thumb`, `content_pic_square`, `pic_caption`, `content_status`, `deletable`, `meta_title`, `meta_desc`, `meta_keyword`, `featured_on_homepage`, `trending`, `recommended`, `recommended_category`, `show_sidebar`, `read_count`, `comment_count`, `like_count`, `last_read`, `last_comment`, `hash`) VALUES (126, NULL, 2, 7, NULL, 0, 'Trio', 'Ipsum aliquid odit corrupti autem natus. Aliquid et ab voluptatum reprehenderit fugiat Nulla voluptate iusto aperiam quis quam Assumenda animi quisquam atque minus accusamus Aliquid?', NULL, '2021-04-27 08:13:07', NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, ''), (125, 1, 1, 7, NULL, 0, 'Solo', 'Adipisicing nostrum vel eveniet fugit ab Earum at corporis mollitia eligendi voluptas id? Consequatur illo.', NULL, '2021-04-27 08:09:32', NULL, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, '');
+							 INSERT INTO `tbl_content_photo` (`id`, `id_content`, `picture`, `picture_thumb`, `picture_square`) VALUES (2, 125, 'Original_20210427080932000000_1.jpeg', 'Original202104270809320000001_thumb.jpeg', 'Original202104270809320000001_square.jpeg'), (3, 126, 'Original_20210427081306000000_2.jpeg', 'Original202104270813060000002_thumb.jpeg', 'Original202104270813060000002_square.jpeg'), (4, 126, 'Original_20210427081306000000_5.jpeg', 'Original202104270813060000005_thumb.jpeg', 'Original202104270813060000005_square.jpeg'), (5, 126, 'Original_20210427081307000000_3.jpeg', 'Original202104270813070000003_thumb.jpeg', 'Original202104270813070000003_square.jpeg');
+
+[2021/04/30] - tambah tbl_content.publish_date
+							 ALTER TABLE `tbl_content` ADD `publish_date` DATETIME NULL AFTER `submit_date`;
+
+[2021/05/02] - hapus data hypeshop dari tabel tbl_category:
+							 DELETE FROM `tbl_category` WHERE `tbl_category`.`id_category` = 7;
+[2021/05/02] - ubah data hypeshop dari tabel tbl_module:
+							 UPDATE `tbl_module` SET `module_name` = 'Hypeshop', `module_desc` = 'Digunakan untuk mengelola konten shopable pada website' WHERE `tbl_module`.`id_module` = 48
+[2021/05/04] - hapus column name dari tabel tbl_subscriber:
+							 ALTER TABLE `tbl_subscriber` CHANGE `name` `name` VARCHAR(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+
+[2021/05/05] - add field order ke tbl job, jobfield & interest:
+              ALTER TABLE `tbl_job` ADD `order` INT NOT NULL DEFAULT '99' AFTER `deleted`; 
+              ALTER TABLE `tbl_jobfield` ADD `order` INT NOT NULL DEFAULT '99' AFTER `deleted`; 
+              ALTER TABLE `tbl_interest` ADD `order` INT NOT NULL DEFAULT '99' AFTER `deleted`; 
+[2021/05/06] - add field edit_id_admin ke tbl content:
+              ALTER TABLE `tbl_content` ADD `edit_id_admin` INT AFTER `id_user`; 
+[2021/05/07] - add field untuk hide title Gres di kanal
+              ALTER TABLE `tbl_category` ADD `show_section_title` INT NOT NULL DEFAULT '1' AFTER `updatable`; 
+[2021/05/10] - add field untuk user/penulis internal
+              ALTER TABLE `tbl_user` ADD `is_internal` INT NOT NULL DEFAULT '0' AFTER `id_interest`; 
+
+[2021/05/08] - tambah data di tbl_module
+               INSERT INTO `tbl_module` (`module_parent`, `module_name`, `module_desc`, `module_icon`, `module_icon_big`, `module_redirect`, `module_order`, `module_status`, `updatable`, `deletable`) VALUES(63, 'Iklan', 'Digunakan untuk mengelola iklan yang ditayangkan di website', 'fa-bookmark', 'Original2020060621441600000021siteseopromotionmarketingweb.png', 'admin_ads', 1, 1, 1, 1);
+               INSERT INTO `tbl_module` (`module_parent`, `module_name`, `module_desc`, `module_icon`, `module_icon_big`, `module_redirect`, `module_order`, `module_status`, `updatable`, `deletable`) VALUES(63, 'Voucher Iklan', 'Digunakan untuk mengelola voucher iklan', 'fa-tag', '20210508052753000000201910031220560000004badgediscountsaleshopshoppingcommercemarket.png', 'admin_ads_voucher', 3, 1, 1, 1);
+
+[2021/05/08] - Add table tbl_ads_voucher
+               CREATE TABLE `tbl_ads_voucher` ( `id_ads_voucher` INT NOT NULL AUTO_INCREMENT , `start_date` DATE NOT NULL , `end_date` DATE NOT NULL , `code` VARCHAR(100) NOT NULL , `value` INT NOT NULL , `is_active` BOOLEAN NOT NULL, `is_deleted` tinyint(1) NOT NULL DEFAULT '0' , PRIMARY KEY (`id_ads_voucher`));
+
+[2021/05/08] - tambah kolom price_per_day di tbl_adstype:
+	             ALTER TABLE `tbl_adstype` ADD `price_per_day` INT NOT NULL AFTER `ads_order`;
+	             UPDATE `tbl_adstype` SET `price_per_day` = 10000;
+
+[2021/05/09] - tambah module di tbl_module:
+               INSERT INTO `tbl_module` (`module_parent`, `module_name`, `module_desc`, `module_icon`, `module_icon_big`, `module_redirect`, `module_order`, `module_status`, `updatable`, `deletable`) VALUES(63, 'Posisi Iklan', 'Digunakan untuk mengelola posisi iklan yang ditayangkan di website', 'fa-location-arrow', 'Original2020060621441600000021siteseopromotionmarketingweb.png', 'admin_adstype', 2, 1, 1, 1);
+
+[2021/05/09] - tambah kolom id_user dan status di tbl_ads:
+               ALTER TABLE `tbl_ads` ADD `id_user` INT NULL AFTER `id_ads`;
+               ALTER TABLE `tbl_ads` ADD `status` INT NULL DEFAULT 1 AFTER `ads_pic`;
+
+[2021/05/10] - tambah tabel tbl_ads_orders dan tbl_ads_order_item:
+               CREATE TABLE `tbl_ads_order` ( `id_ads_order` INT NOT NULL  AUTO_INCREMENT, `id_user` INT NOT NULL , `order_status` TINYINT NOT NULL DEFAULT '0' , `checkout_date` DATETIME , `id_ads_voucher` INT NULL , `voucher_code` VARCHAR(100) NULL , `voucher_value` INT NULL, `payment_status` VARCHAR(50) NULL , `payment_date` DATETIME , `payment_message` TEXT NULL , PRIMARY KEY (`id_ads_order`));
+               CREATE TABLE `tbl_ads_order_item` ( `id_ads_order_item` INT NOT NULL  AUTO_INCREMENT, `id_ads_order` INT NOT NULL , `id_adstype` INT NOT NULL , `price_per_day` INT , `start_date` date NOT NULL , `finish_date` date NOT NULL , `is_booked` BOOLEAN NOT NULL DEFAULT 0 ,  PRIMARY KEY (`id_ads_order_item`));
+
+[2021/05/13] - update kolom di tbl_ads:
+               ALTER TABLE `tbl_ads` ADD `id_ads_order_item` INT AFTER `id_ads`; 
+               ALTER TABLE `tbl_ads` ADD `edit_id_admin` INT AFTER `id_user`; 
+               ALTER TABLE `tbl_ads` CHANGE `ads_pic` `ads_pic` VARCHAR(200) NULL;
+
+[2021/05/16] - tambah kolom reject_note di tbl_ads:
+               ALTER TABLE `tbl_ads` ADD `reject_note` TEXT NULL;
+
+[2021/05/18] - tambah kolom snap_token di tbl_ads_order:
+               ALTER TABLE `tbl_ads_order` ADD `snap_token` CHAR(36) NULL;
+
+[2021/05/18] - tambah tabel tbl_ads_order_notification:
+               CREATE TABLE `tbl_ads_order_notification` ( `id_ads_order_notification` INT NOT NULL  AUTO_INCREMENT, `id_ads_order` INT NOT NULL , `status_code` SMALLINT NOT NULL , `notification` TEXT NOT NULL , PRIMARY KEY (`id_ads_order_notification`));
+
+[2021/05/19] - tambah module di tbl_module:
+               INSERT INTO `tbl_module` VALUES (NULL, 63, 'Transaksi Iklan', 'Digunakan untuk melihat transaksi iklan oleh member', 'fa-shopping-cart', '20210519150908000000201911271527370000002shopshoppingcommercesupermarketmarketcart.png', 'admin_ads_order', 4, 1, 1, 1)
+
+[2021/05/19] - tambah kolom reason_for_revision, revised_redirect_url dan revised_ads_pic di tbl_ads:
+               ALTER TABLE `tbl_ads` ADD `reason_for_revision` TEXT NULL;
+               ALTER TABLE `tbl_ads` ADD `revised_redirect_url` VARCHAR(200) NULL AFTER `redirect_url`;
+               ALTER TABLE `tbl_ads` ADD `revised_ads_pic` VARCHAR(200) NULL AFTER `ads_pic`;
+
+[2021/05/19] - update comment kolom status di tbl_ads:
+               ALTER TABLE `tbl_ads` CHANGE `status` `status` TINYINT NULL DEFAULT '1' COMMENT '-3: Revisi Ditolak, -2: Publish Ditolak, -1: Draft, 0: Menunggu Approval, 1: Active, 2: Menunggu Approval Revisi';
+
+[2021/05/21] - tambah tbl_ads_cancel:
+               CREATE TABLE `tbl_ads_cancel` ( `id_ads_cancel` INT NOT NULL AUTO_INCREMENT , `id_ads_order_item` INT NOT NULL , `status` TINYINT NOT NULL COMMENT '-1: Rejected,\n0: Waiting for Approval,\n1: Approved & Processed,\n2: Finished', `reason` TEXT NOT NULL , `account_name` VARCHAR(300) NOT NULL , `account_bank` VARCHAR(100) NOT NULL , `account_number` INT NOT NULL , `request_date` DATETIME NOT NULL , `reject_note` TEXT NULL , `nominal` INT NULL, PRIMARY KEY (`id_ads_cancel`));
+
+[2021/05/21] - tambah module di tbl_module:
+               INSERT INTO `tbl_module` VALUES (NULL, 63, 'Pembatalan Iklan', 'Digunakan untuk mengelola pembatalan iklan oleh member', 'fa-times-circle', '20210519150908000000201911271527370000002shopshoppingcommercesupermarketmarketcart.png', 'admin_ads_cancel', 5, 1, 1, 1)
+
+[2021/07/06] - hapus kolom snap_token di tbl_ads_order:
+               ALTER TABLE `tbl_ads_order` DROP `snap_token`;
+
+
+
+[2021/07/13] -  tambah kolom created_at di tbl_content_like:
+                ALTER TABLE `tbl_content_like` ADD `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `id_user`;
+
+[2021/07/13] -  tambah tbl_competition:
+                CREATE TABLE `tbl_competition` ( `id_competition` INT NOT NULL AUTO_INCREMENT , `title` VARCHAR(255) NOT NULL , `start_date` DATE NOT NULL , `finish_date` DATE NOT NULL , PRIMARY KEY (`id_competition`));
+
+[2021/07/13] -  tambah modul kompetisi di tbl_module:
+                INSERT INTO `tbl_module` (`id_module`, `module_parent`, `module_name`, `module_desc`, `module_icon`, `module_icon_big`, `module_redirect`, `module_order`, `module_status`, `updatable`, `deletable`) VALUES (NULL, '56', 'Kompetisi', 'Digunakan untuk mengelola kompetisi Hypephoto', 'fa-trophy', '202107131937510000002019100312100900000017careerstairsbusinessjobworkofficeboss.png', 'admin_competition', '25', '1', '1', '1');
+
+
+[2021/07/14] -  tambah kolom id_competition di tbl_content:
+                ALTER TABLE `tbl_content` ADD `id_competition` INT AFTER `id_user`;
+
+[2021/07/15] -  tambah kolom max_content di tbl_competition:
+                ALTER TABLE `tbl_competition` ADD `max_content` TINYINT DEFAULT 1 AFTER `finish_date`;
+
+[2021/07/16] -  tambah kolom description & pic di tbl_competition:
+                ALTER TABLE `tbl_competition` ADD `description` text DEFAULT NULL, ADD `pic` varchar(255) DEFAULT NULL;
+
+[2021/07/16] -  update module kompetisi pada tbl_module:
+                DELETE FROM `tbl_module` WHERE `module_name`='Kompetisi';
+                INSERT INTO `tbl_module` (`id_module`, `module_parent`, `module_name`, `module_desc`, `module_icon`, `module_icon_big`, `module_redirect`, `module_order`, `module_status`, `updatable`, `deletable`) VALUES (NULL, '56', 'Kompetisi Foto', 'Digunakan untuk mengelola kompetisi foto', 'fa-trophy', '20210717062819000000podium.png', 'admin_competition', '25', '1', '1', '1');
+
+
+[2021/07/19] -  ubah tipe short_desc pada tbl_content_photo:
+                ALTER TABLE `tbl_content_photo` CHANGE `short_desc` `short_desc` TEXT;
+
+[2021/07/19] -  tambah kolom meta_title, meta_desc, meta_keyword pada tbl_global:
+                ALTER TABLE `tbl_global` ADD `meta_title` VARCHAR(500) NULL, ADD `meta_desc` TEXT NULL AFTER `meta_title`, ADD `meta_keyword` TEXT NULL AFTER `meta_desc`;
+
+[2021/07/19] -  update kolom meta_title, meta_desc, meta_keyword pada tbl_global:
+                UPDATE `tbl_global` SET `meta_title` = 'Hypeabis', `meta_desc` = 'Portal berita berbasis komunitas, bagian dari Bisnis Indonesia Group, yang menyajikan fashion, beauty, lifestyle, health, culinary, art, film, dan beragam cerita inspiratif untuk kaum milenial.', `meta_keyword` = 'Hypeabis, news, lifestyle, travel, post, blog, ads, read, author, quote, newspaper, digital, video, comment' WHERE `tbl_global`.`id_global` = 1;
+
+
+[2021/07/24] -  tambah kolom pin_on_homepage pada tbl_content:
+                ALTER TABLE `tbl_content` ADD `pin_on_homepage` TINYINT DEFAULT 0 AFTER `featured_on_homepage`;
+
+
+[2021/07/26] -  tambah kolom location_pic pada tbl_adstype:
+                ALTER TABLE `tbl_adstype` ADD `location_pic` VARCHAR(200) NULL;
+
+
+[2021/07/28] -  tambah tabel tbl_content_editor:
+                CREATE TABLE `tbl_content_editor` (`id_content_editor` int(11) NOT NULL AUTO_INCREMENT, `id_content` int(11) NOT NULL, `id_admin` int(11) NOT NULL , PRIMARY KEY (`id_content_editor`), `latest_edited_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP);
+
+
+[2021/07/29] -  isi data tabel tbl_content_editor dari tbl_content:
+                INSERT INTO tbl_content_editor SELECT NULL, tbl_content.id_content, tbl_content.id_admin, IF(publish_date IS NOT NULL, publish_date, submit_date) FROM `tbl_content` LEFT JOIN tbl_content_editor ON tbl_content.id_content=tbl_content_editor.id_content AND tbl_content.id_admin=tbl_content_editor.id_admin WHERE tbl_content.id_admin IS NOT NULL AND tbl_content.id_admin !=0 AND tbl_content_editor.id_content IS NULL AND tbl_content_editor.id_admin IS NULL;
+
+
+[2020/08/01] -  tambah data pada tbl_module:
+                INSERT INTO `tbl_module` (`id_module`, `module_parent`, `module_name`, `module_desc`, `module_icon`, `module_icon_big`, `module_redirect`, `module_order`, `module_status`, `updatable`, `deletable`) VALUES (NULL, '0', 'Laporan', '', 'fa-bar-chart', '20210801142205000000analytics.png', 'admin_report_author', '90', '1', '1', '1')
+
+[2020/08/01] -  tambah kolom last_login_at pada tbl_user:
+                ALTER TABLE `tbl_user` ADD `last_login_at` DATETIME;
+
+[2020/08/01] -  update data created di tbl_user:
+                UPDATE tbl_user SET created=modified WHERE created IS NULL OR created='0000-00-00 00:00:00';
+
+
+[2020/08/01] -  tambah kolom id_category pada tbl_user_read:
+                ALTER TABLE `tbl_user_read` CHANGE `id_category` `id_category` INT(11) NULL;

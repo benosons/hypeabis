@@ -1,0 +1,6 @@
+application/logs/*.log
+application/config/config.php
+application/config/database.php
+assets/*
+files/backend/plugins/ckeditor/config.js
+virtual/*

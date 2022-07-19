@@ -58,27 +58,19 @@ if ((isset($ads['sup_leaderboard_hm']['builtin'][0]['id_ads']) && $ads['sup_lead
             </div>
         </div>
         <div class="col-sm-8">
-            <table>
-                <tr>
-                <h3><b>Title</b></h3>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="text">What CrossFit has taught me, and what I think everyone <br /> can apply to their own fitness, is the idea that the body can
-                        <br />always do more. The average CrossFit WOD is deliberately<br /></div>
-                    </td>
-                    <td>
-                        <div class="text">What CrossFit has taught me, and what I think everyone <br /> can apply to their own fitness, is the idea that the body can
-                        <br />always do more. The average CrossFit WOD is deliberately<br /></div>
-                    </td>
-                    <td>
-                        <div class="text">What CrossFit has taught me, and what I think everyone <br /> can apply to their own fitness, is the idea that the body can
-                        <br />always do more. The average CrossFit WOD is deliberately<br /></div>
-                    </td>
-                </tr>
-            </table>
+            <div class="row">
+            <?php foreach ($gallery as $xx => $carousel){ 
+				if($xx <= 3){
+				?>
+				<div class="col-sm-4">
+                    <div class="text"><?= $carousel->deskripsi ?></div>
+                </div>
+			<?php 
+				}
+			} 
+			?>
             
-            
+            </div>
         </div>
     
     </div>

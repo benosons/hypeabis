@@ -3,6 +3,7 @@ $(document).ready(function () {
     let theme = ''
     
     $('#darkSwitch').on('change', function(e){
+        
         if($(theme).attr('data-theme') == 'dark'){
             $('#hype-visual-logo').addClass('title-about-light').removeClass('title-about-dark');
         }else{

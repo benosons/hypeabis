@@ -120,25 +120,26 @@ class Hypevirtual extends CI_Controller
         
     }
 
-    private function clicked($id)
+
+    public function clicked()
     {
+
         $now = date("Y-m-d");
-        print_r('ada');die;
-        $totalShow = $this->mdl_gallery->getGalleryByID($id_galery)[0]->read_count + 1;
-        $totalClick = $this->mdl_gallery->getGalleryByID($id_galery)[0]->clicked_count + 1;
+        $id_galeri = $this->input->post('id_galeri');
+        if (!$this->input->is_ajax_request()) {
+            redirect(base_url());
+        }
+
+        $totalClick = $this->mdl_gallery->getGalleryByID($id_galeri)[0]->clicked_count + 1;
 
         $update_data = array();
-        if($type == 'show'){
-            $update_data['read_count'] = $totalShow;
-        }
 
-        if($type == 'click'){
-            $update_data['clicked_count'] = $totalClick;
-        }
+        $update_data['clicked_count'] = $totalClick;
 
-        if($isDisplay){
-            $metadata = $this->mdl_gallery->updateGaleri($update_data, $id_galery);
-        }
+        $metadata = $this->mdl_gallery->updateGaleri($update_data, $id_galeri);
+
+        $data['status'] = 'success';
+        echo json_encode($data);
         
     }
 
